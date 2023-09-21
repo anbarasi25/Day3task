@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Country Flags</title>
+</head>
+<body>
+  <h1>Country Flags</h1>
+  <ul id="flagList"></ul>
+
+  <script>
+    fetch("https://restcountries.com/v3.1/all")
+      .then((response) => response.json())
+      .then((data) => {
+        const flagList = document.getElementById("flagList");
+
+        data.forEach((country) => {
+          const flagURL = country.flags.svg;
+          const countryName = country.name.common;
+
+          const listItem = document.createElement("li");
+          const flagImage = document.createElement("img");
+          flagImage.src = flagURL;
+          flagImage.alt = `${countryName} Flag`;
+
+          listItem.appendChild(flagImage);
+          listItem.appendChild(document.createTextNode(countryName));
+          flagList.appendChild(listItem);
+        });
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  </script>
+</body>
+</html>
